@@ -1,6 +1,7 @@
 #include <string.h>
-
+#include <Servo.h>
 int pin = 2;
+int pos = 0;
 int led_state = 0;
 String s = "";
 
@@ -15,11 +16,24 @@ struct led_action{
   bool state;  
 };
 
+
+Servo myservo;
+
+
 void flush_input_buffer() {
    memset(input_buffer, 0, INPUT_BUFFER_LENGTH);
    input_ptr = input_buffer;
 }
 
+void unlock() {
+//for(pos = 0; pos < 180 0; pos -= 1) {  // goes from 0 degrees to 180 degrees 
+                          // in steps of 1 degree 
+      myservo.write(180);              // tell servo to go to position in variable 'pos'
+      delay(2500);
+      myservo.write(0);
+   //   }
+}
+ 
 struct led_action parse_led_action(char *input, int len) {
   char buff[INPUT_BUFFER_LENGTH] = {0};
   memcpy(buff, input, len);
@@ -58,6 +72,9 @@ void setup() {
   //struct led_action a = parse_led_action("2 on\0", 5);
   //digitalWrite(a.pin, a.state);
   
+  myservo.attach(9);
+  myservo.write(0);
+  
 }
 
 void loop() {
@@ -74,6 +91,7 @@ void loop() {
       
       if (0 == strcmp(&input_buffer[0], "success")) {
         digitalWrite(7, HIGH);
+        unlock();
       }
       
       pin = atoi(&input_buffer[0]);

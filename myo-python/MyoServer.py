@@ -62,7 +62,11 @@ class Listener(libmyo.DeviceListener):
 
         self.led_state = 0
         self.ready = False
-        self.combo = ['<Pose: wave_in>', '<Pose: fist>', '<Pose: fingers_spread>', '<Pose: fist>', '<Pose: wave_out>']
+        self.combo = ['<Pose: wave_in>',
+            '<Pose: fist>',
+            '<Pose: fingers_spread>',
+            '<Pose: fist>',
+            '<Pose: wave_out>']
         self.i = 0
 
     def __led_for_pose(self, pose):
