@@ -6,11 +6,12 @@
 byte mac[] = { 0
 };
 
-IPAddress ip(192, 188, 43, 3);
+//network information of client (xadow)
+IPAddress ip(192, 168, 43, 47);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 
-WiFiServer server(23);
+WiFiServer server(3000);
 
 char *ssid = "The D";
 char *pass = "Microsoft1328";
