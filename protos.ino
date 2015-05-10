@@ -34,7 +34,7 @@ void setup()
   pinMode(WAVEOUT_PIN, OUTPUT);
   pinMode(FINGERSSPREAD_PIN, OUTPUT);
   pinMode(DOUBLETAP_PIN, OUTPUT);
-  
+  pinMode(11,OUTPUT);
   pinMode(GreenPOW, OUTPUT);
   pinMode(RedPOW, OUTPUT);
   
@@ -63,16 +63,18 @@ void loop() {
       digitalWrite(GreenPOW,LOW);
       wrong++;
       break;
-    case waveIn:     
+    case waveIn:
       digitalWrite(WAVEIN_PIN,HIGH);
       digitalWrite(GreenPOW,HIGH);
       digitalWrite(RedPOW,LOW);
+      unlock();
       break;
     case waveOut:
       digitalWrite(WAVEOUT_PIN,HIGH);
       digitalWrite(RedPOW, HIGH);
       digitalWrite(GreenPOW,LOW);
       wrong++; 
+      lock();
       break;
     case fingersSpread:
       digitalWrite(FINGERSSPREAD_PIN,HIGH);
@@ -83,6 +85,7 @@ void loop() {
     case doubleTap:
       digitalWrite(DOUBLETAP_PIN,HIGH);
       break;
+   
    } 
    if (wrong == 2)
    {
@@ -93,45 +96,38 @@ void loop() {
      }
        digitalWrite(RedPOW, LOW);
 
-  
+ 
      wrong = 0;
      return;
      
    }
    
+}
 
-while(mySerial.available() > 0 ) {
+void unlock() {
+  
+if (mySerial.available() > 0 ) {
  
-num = mySerial.read();
 
 //works for the most part, for what we need atleast
-if(num == 0) {
-for(pos = 10; pos < 180; pos += 1)  // goes from 0 degrees to 180 degrees 
-              {                                    // in steps of 1 degree 
-                myservo.write(pos);              // tell servo to go to position in variable 'pos' 
-                delay(15);
-                  // waits 15ms for the servo to reach the position 
-              }
-}
-else if ( num != 0) {
+
   for(pos = 180; pos > 0; pos -= 1)  // goes from 0 degrees to 180 degrees 
-              {                                    // in steps of 1 degree 
+             {                                    // in steps of 1 degree 
                 myservo.write(pos);              // tell servo to go to position in variable 'pos' 
-                delay(15);
-              }
+              delay(15);
+             }
+  
+        }
+}
+
+
+void lock() {
+ for(pos = 0; pos <= 180; pos +=1 ) {
+    myservo.write(pos);
+    delay(15);
+ } 
   
 }
-/*}   else if(num2 != '0') {
- for(pos = 180; pos >= 0; pos -=1) {
-   
-  myservo.write(pos);
- delay(15); 
- }
-}*/
 
-  }
-  
-
-}
 
   
