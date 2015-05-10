@@ -58,11 +58,11 @@ class Listener(libmyo.DeviceListener):
         self.pose = libmyo.Pose.rest
         self.rssi = None
         self.locked = False
-        self.arduino = serial.Serial('/dev/cu.usbmodem1413', 9600, timeout=.1)
+        self.arduino = serial.Serial('/dev/cu.usbmodem1413', 115200, timeout=.1)
 
         self.led_state = 0
         self.ready = False
-        self.combo = ['<Pose: wave_in>', '<Pose: fist>', '<Pose: fingers_spread>']
+        self.combo = ['<Pose: wave_in>', '<Pose: fist>', '<Pose: fingers_spread>', '<Pose: fist>', '<Pose: wave_out>']
         self.i = 0
 
     def __led_for_pose(self, pose):
@@ -95,7 +95,7 @@ class Listener(libmyo.DeviceListener):
         # if (self.arduino.readline() == "ready" or self.ready == True):
         #     self.ready = True
 
-        if self.i == 3:
+        if self.i == len(self.combo):
             self.i = 0
             self.ready = False
             self.arduino.write("success\r")
@@ -113,12 +113,12 @@ class Listener(libmyo.DeviceListener):
 
         if (poseString == self.combo[self.i]):
             #send success
-            self.arduino.write('{0} {1}\r'.format(self.i, "on"))
+            self.arduino.write('{0} {1}\r'.format(self.i+2, "on"))
             self.i += 1
             # self.ready = False
         else:
             self.i = 0
-            for x in range(0, 3):
+            for x in range(2, 7):
                 self.arduino.write('{0} {1}\r'.format(x, "off"))
             # self.ready = False
             #send back failed

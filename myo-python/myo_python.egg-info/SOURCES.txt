@@ -1,0 +1,9 @@
+myo/__init__.py
+myo/device_listener.py
+myo/quaternion.py
+myo/vector.py
+myo_python.egg-info/PKG-INFO
+myo_python.egg-info/SOURCES.txt
+myo_python.egg-info/dependency_links.txt
+myo_python.egg-info/requires.txt
+myo_python.egg-info/top_level.txt

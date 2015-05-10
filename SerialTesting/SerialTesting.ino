@@ -51,8 +51,6 @@ struct led_action parse_led_action(char *input, int len) {
 
 void setup() {
   Serial.begin(115200);
-  pinMode(pin, OUTPUT);
-  pinMode(7, OUTPUT);
   int i;
   for(i = 0; i < 8; i++) {
     pinMode(i, OUTPUT); 
@@ -73,8 +71,9 @@ void loop() {
     if ('\r' == c) {
       Serial.print(input_buffer);
       delay(10);
+      
       if (0 == strcmp(&input_buffer[0], "success")) {
-        digitalWrite(3, HIGH);
+        digitalWrite(7, HIGH);
       }
       
       pin = atoi(&input_buffer[0]);
